@@ -1,0 +1,28 @@
+﻿@model Asm_AppdDev.Models.Category
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<h2>Create</h2>
+@Html.AntiForgeryToken()
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+@using (Html.BeginForm())
+{
+
+    <div class="form-group">
+        @Html.LabelFor(c => c.Name)
+        @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Name)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(c => c.Description)
+        @Html.TextBoxFor(c => c.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(c => c.Description)
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+}
+
+@Html.ActionLink("Back to List", "Index")

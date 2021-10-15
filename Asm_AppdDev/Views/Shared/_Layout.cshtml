@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Asm_AppdDev.Utils
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -22,8 +23,13 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole(Role.Staff))
+                        {
+                            <li>@Html.ActionLink("Categories", "Index", "Categories")</li>
+                        }
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Asm_AppdDev.Models;
+using Asm_AppdDev.Utils;
 
 namespace Asm_AppdDev.Controllers
 {
@@ -151,10 +152,12 @@ namespace Asm_AppdDev.Controllers
         {
             if (ModelState.IsValid)
             {
+                var staff = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, Role.User);
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
