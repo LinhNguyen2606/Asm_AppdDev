@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Asm_AppdDev.Models.Staff>
+@{
+    ViewBag.Title = "IndexStaff";
+}
+
+@Html.ActionLink("Create", "CreateStaffAccount", "Admins", new { @class = "btn btn-primary" })
+
+<h2>IndexStaff</h2>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Username</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>@item.User.Email</td>
+            <td>@item.User.UserName</td>
+            <td>@item.FullName</td>
+            <td>@item.Age</td>
+            <td>@item.Address</td>
+        </tr>
+        }
+            </tr>
+        </tbody>
+    </table>
