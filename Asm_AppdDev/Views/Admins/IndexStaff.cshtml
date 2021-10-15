@@ -3,32 +3,38 @@
     ViewBag.Title = "IndexStaff";
 }
 
-@Html.ActionLink("Create", "CreateStaffAccount", "Admins", new { @class = "btn btn-primary" })
+<div class="page-header">
+    <h2 style="margin-bottom: 15px">List Of Staff Account</h2>
+</div>
 
-<h2>IndexStaff</h2>
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+    <div class="form-group">
+        @Html.ActionLink("Create a New Staff", "CreateStaffAccount", "Admins", new { @class = "btn btn-primary" })
+    </div>
+</div>
 
-<table class="table">
-    <thead class="thead-dark">
+<table class="table table-bordered">
+    <thead>
         <tr>
-            <th scope="col">Email</th>
-            <th scope="col">Username</th>
-            <th scope="col">Name</th>
-            <th scope="col">Age</th>
-            <th scope="col">Address</th>
+            <th scope="col">Staff Email</th>
+            <th scope="col">Staff FullName</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            @foreach (var item in Model)
+           @foreach (var item in Model)
             {
-        <tr>
-            <td>@item.User.Email</td>
-            <td>@item.User.UserName</td>
-            <td>@item.FullName</td>
-            <td>@item.Age</td>
-            <td>@item.Address</td>
-        </tr>
-        }
-            </tr>
-        </tbody>
-    </table>
+                <tr>
+                    <td style="vertical-align: middle" scope="row">@item.User.Email</td>
+                    <td style="vertical-align: middle" scope="row">@item.FullName</td>
+
+                    <td>
+                        @Html.ActionLink("Edit Staff Info", "EditStaffAccount", "Admins", new { id = @item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Delete Staff", "DeleteStaffAccount", "Admins", new { id = @item.Id }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Password Reset", "StaffPasswordReset", "Admins", new { id = @item.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Staff Details", "StaffInfoDetails", "Admins", new { id = @item.Id }, new { @class = "btn btn-info" })
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>
