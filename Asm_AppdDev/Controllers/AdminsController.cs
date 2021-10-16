@@ -12,7 +12,6 @@ using System.Web.Mvc;
 
 namespace Asm_AppdDev.Controllers
 {
-    [Authorize(Roles = Role.Admin)]
     public class AdminsController : Controller
     {
         //tao ket noi
@@ -42,7 +41,8 @@ namespace Asm_AppdDev.Controllers
                 _userManager = value;
             }
         }
-
+        
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult IndexStaff()
         {
@@ -51,12 +51,13 @@ namespace Asm_AppdDev.Controllers
             return View(staff);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult CreateStaffAccount()
         {
             return View();
         }
-
+        [Authorize(Roles = "admin")]    
         [HttpPost]
         public async Task<ActionResult> CreateStaffAccount(StaffAccountViewModels viewModel)
         {
@@ -94,5 +95,38 @@ namespace Asm_AppdDev.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult EditStaffAccount(int id)
+        {
+            var staffInDb = _context.Staffs.SingleOrDefault(t => t.Id == id);
+            if (staffInDb == null)
+            {
+                return HttpNotFound();
+            }
+            return View(staffInDb);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult EditStaffAccount(Staff staff)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(staff);
+            }
+            var staffInDb = _context.Staffs.SingleOrDefault(t => t.Id == staff.Id);
+            if (staffInDb == null)
+            {
+                return HttpNotFound();
+            }
+
+            staffInDb.FullName = staff.FullName;
+            staffInDb.Age = staff.Age;
+            staffInDb.Address = staff.Address;
+
+            _context.SaveChanges();
+            return RedirectToAction("IndexStaff", "Admins");
+        }
     }
 }
