@@ -128,5 +128,42 @@ namespace Asm_AppdDev.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexStaff", "Admins");
         }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult DeleteStaffAccount(string id)
+        {
+            var staffInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            var staffInfoDb = _context.Staffs.SingleOrDefault(i => i.StaffId == id);
+            if (staffInDb == null || staffInfoDb == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Users.Remove(staffInDb);
+            _context.Staffs.Remove(staffInfoDb);
+            _context.SaveChanges();
+            return RedirectToAction("IndexStaff", "Admins");
+        }
+
+        [Authorize(Roles = "admin")]
+        public ActionResult StaffPasswordReset(string id)
+        {
+            var staffInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            if (staffInDb  == null)
+            {
+                return HttpNotFound();
+            }
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            userId = staffInDb.Id;
+            if (userId != null)
+            {
+                UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+                userManager.RemovePassword(userId);
+                string newPassword = "Password123@";
+                userManager.AddPassword(userId, newPassword);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("IndexStaff", "Admins");
+        }
+
     }
 }
