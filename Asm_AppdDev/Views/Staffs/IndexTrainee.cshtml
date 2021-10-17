@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Asm_AppdDev.Models.Trainee>
+@{
+    ViewBag.Title = "IndexTrainee";
+}
+
+<div class="page-header">
+    <h2 style="margin-bottom: 15px">List Of Trainee Account</h2>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+    <div class="form-group">
+        @Html.ActionLink("Create a New Trainee", "CreateTraineeAccount", "Staffs", new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Trainee Email</th>
+            <th scope="col">Trainee FullName</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model)
+        {
+            <tr>
+                <td style="vertical-align: middle" scope="row">@item.User.Email</td>
+                <td style="vertical-align: middle">@item.Name</td>
+                <td>
+                    @Html.ActionLink("Edit Trainee Info", "EditTraineeAccount", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete Trainee", "DeleteTraineeAccount", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Password Reset", "TraineePasswordReset", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Trainee Details", "TraineeInfoDetails", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-info" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
