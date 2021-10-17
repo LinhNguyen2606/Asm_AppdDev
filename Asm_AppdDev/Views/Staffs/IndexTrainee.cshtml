@@ -6,6 +6,13 @@
 <div class="page-header">
     <h2 style="margin-bottom: 15px">List Of Trainee Account</h2>
 </div>
+@using (Html.BeginForm("IndexTrainee", "Staffs", FormMethod.Get))
+{
+    <p>
+        Find by name and age: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
     <div class="form-group">

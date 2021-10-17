@@ -39,12 +39,20 @@ namespace Asm_AppdDev.Controllers
             }
         }
         [Authorize(Roles = "staff")]
-        public ActionResult IndexTrainee()
+        public ActionResult IndexTrainee(string searchString)
         {
             var trainee = _context.Trainees.ToList();
             var user = _context.Users.ToList();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                trainee = trainee.Where(
+                                 s => s.Name.ToLower().Contains(searchString.ToLower()) ||
+                                 s.Age.ToString().Contains(searchString.ToLower())).ToList();
+            }
             return View(trainee);
         }
+
 
         [Authorize(Roles = "staff")]
         [HttpGet]
