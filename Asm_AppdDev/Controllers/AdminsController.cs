@@ -244,6 +244,20 @@ namespace Asm_AppdDev.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexTrainer", "Admins");
         }
-
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult DeleteTrainerAccount(string id)
+        {
+            var trainerInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            var trainerInFoDb = _context.Trainers.SingleOrDefault(i => i.TrainerId == id);
+            if(trainerInDb == null || trainerInFoDb == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Users.Remove(trainerInDb);
+            _context.Trainers.Remove(trainerInFoDb);
+            _context.SaveChanges();
+            return RedirectToAction("IndexTrainer", "Admins");
+        }
     }
 }
