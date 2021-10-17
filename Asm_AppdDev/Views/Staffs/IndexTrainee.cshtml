@@ -28,7 +28,7 @@
                 <td style="vertical-align: middle" scope="row">@item.User.Email</td>
                 <td style="vertical-align: middle">@item.Name</td>
                 <td>
-                    @Html.ActionLink("Edit Trainee Info", "EditTraineeAccount", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Edit Trainee Info", "EditTraineeAccount", "Staffs", new { id = @item.Id }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Delete Trainee", "DeleteTraineeAccount", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-danger" })
                     @Html.ActionLink("Password Reset", "TraineePasswordReset", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-success" })
                     @Html.ActionLink("Trainee Details", "TraineeInfoDetails", "Staffs", new { id = @item.TraineeId }, new { @class = "btn btn-info" })

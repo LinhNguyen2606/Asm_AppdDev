@@ -90,5 +90,55 @@ namespace Asm_AppdDev.Controllers
                 ModelState.AddModelError("", error);
             }
         }
+        [Authorize(Roles = "staff")]
+        [HttpGet]
+        public ActionResult EditTraineeAccount(int id)
+        {
+            var traineeInDb = _context.Trainees.SingleOrDefault(t => t.Id == id);
+                if(traineeInDb == null)
+                {
+                    return HttpNotFound();
+                }
+            return View(traineeInDb);
+        }
+        [Authorize(Roles = "staff")]
+        [HttpPost]
+        public ActionResult EditTraineeAccount(Trainee trainee)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(trainee);
+            }
+            var traineeInfoDb = _context.Trainees.SingleOrDefault(t => t.Id == trainee.Id);
+
+            if(traineeInfoDb == null)
+            {
+                return HttpNotFound();
+            }
+            traineeInfoDb.Name = trainee.Name;
+            traineeInfoDb.Age = trainee.Age;
+            traineeInfoDb.DateOfBirth = trainee.DateOfBirth;
+            traineeInfoDb.Address = trainee.Address;
+            traineeInfoDb.Education = trainee.Education;
+
+            _context.SaveChanges();
+            return RedirectToAction("IndexTrainee", "Staffs");
+        }
+
+        [Authorize(Roles = "staff")]
+        [HttpGet]
+        public ActionResult DeleteTraineeAccount(string id)
+        {
+            var traineeInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            var traineeInFoDb = _context.Trainees.SingleOrDefault(i => i.TraineeId == id);
+            if(traineeInDb == null || traineeInFoDb == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Users.Remove(traineeInDb);
+            _context.Trainees.Remove(traineeInFoDb);
+            _context.SaveChanges();
+            return RedirectToAction("IndexTrainee", "Staffs");
+        }
     }
 }
