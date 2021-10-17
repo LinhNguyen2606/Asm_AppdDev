@@ -275,6 +275,27 @@ namespace Asm_AppdDev.Controllers
             return View(trainerInfoInDb);
         }
 
-        
+        [Authorize(Roles = "admin")]
+        public ActionResult TrainerPasswordReset(string id)
+        {
+            var trainerInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            if(trainerInDb == null)
+            {
+                return HttpNotFound();
+            }
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            userId = trainerInDb.Id;
+            if(userId != null)
+            {
+                UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+                userManager.RemovePassword(userId);
+                string newPassWord = "Password123@";
+                userManager.AddPassword(userId, newPassWord);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("IndexTrainer", "Admins");
+
+        }
+
     }
 }
