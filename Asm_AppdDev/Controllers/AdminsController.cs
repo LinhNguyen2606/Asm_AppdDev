@@ -165,5 +165,85 @@ namespace Asm_AppdDev.Controllers
             return RedirectToAction("IndexStaff", "Admins");
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult IndexTrainer()
+        {
+            var trainer = _context.Trainers.ToList();
+            var user = _context.Users.ToList();
+            return View(trainer);
+        }
+
+        [HttpGet]
+        public ActionResult CreateTrainerAccount()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateTrainerAccount(TrainerAccountViewModels viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser{ UserName = viewModel.Email, Email = viewModel.Email };
+                var result = await UserManager.CreateAsync(user, viewModel.Password);
+                var trainerId = user.Id;
+                var newTrainer = new Trainer()
+                {
+                    TrainerId = trainerId,
+                    Name = viewModel.Name,
+                    Age = viewModel.Age,
+                    Address = viewModel.Address,
+                    Specialty = viewModel.Specialty
+                };
+
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, Role.Trainer);
+                    _context.Trainers.Add(newTrainer);
+                    _context.SaveChanges();
+                    return RedirectToAction("IndexTrainer", "Admins");
+                }
+                AddErrors(result);
+            }
+            return View(viewModel);
+ 
+        }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult EditTrainerAccount(int id)
+        {
+            var trainerInDb = _context.Trainers.SingleOrDefault(u => u.Id == id);
+            if(trainerInDb == null)
+            {
+                return HttpNotFound();
+            }
+            return View(trainerInDb);
+        }
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public ActionResult EditTrainerAccount(Trainer trainer)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(trainer);
+            }
+            var trainerInfoDb = _context.Trainers.SingleOrDefault(u => u.Id == trainer.Id);
+
+            if(trainerInfoDb == null)
+            {
+                return HttpNotFound();
+            }
+            trainerInfoDb.Name = trainer.Name;
+            trainerInfoDb.Age = trainer.Age;
+            trainerInfoDb.Address = trainer.Address;
+            trainerInfoDb.Specialty = trainer.Specialty;
+
+            _context.SaveChanges();
+            return RedirectToAction("IndexTrainer", "Admins");
+        }
+
     }
 }

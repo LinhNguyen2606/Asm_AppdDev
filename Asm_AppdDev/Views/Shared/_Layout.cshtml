@@ -28,6 +28,7 @@
                         if (User.IsInRole(Role.Admin))
                         {
                             <li>@Html.ActionLink("Staff", "IndexStaff", "Admins")</li>
+                            <li>@Html.ActionLink("Trainer", "IndexTrainer", "Admins")</li>
                         }
                         else if (User.IsInRole(Role.Staff))
                         {

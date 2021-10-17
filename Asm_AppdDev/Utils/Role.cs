@@ -12,5 +12,6 @@ namespace Asm_AppdDev.Utils
         public const string Admin = "admin";
         public const string Staff = "staff";
         public const string Trainee = "trainee";
+        public const string Trainer = "trainer";
     }
 }
