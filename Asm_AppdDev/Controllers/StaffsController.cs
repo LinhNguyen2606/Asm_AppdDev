@@ -140,5 +140,18 @@ namespace Asm_AppdDev.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexTrainee", "Staffs");
         }
+        [Authorize(Roles = "staff")]
+        [HttpGet]
+        public ActionResult TraineeInfoDetails(string id)
+        {
+            var traineeId = User.Identity.GetUserId();
+
+            var traineeInfoDb = _context.Trainees.SingleOrDefault(t => t.TraineeId == id);
+            if(traineeInfoDb == null)
+            {
+                return HttpNotFound();
+            }
+            return View(traineeInfoDb);
+        }
     }
 }
