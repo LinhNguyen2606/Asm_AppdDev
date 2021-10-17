@@ -1,0 +1,24 @@
+﻿@model Asm_AppdDev.Models.Trainer
+@{
+    ViewBag.Title = "TrainerInfoDetails";
+}
+
+<h2 style="margin-bottom: 15px; text-align: center; margin-top: 45px;">Trainer Info Details</h2>
+
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p>Trainer Full Name: @Model.Name</p>
+        <p>Trainer Age: @Model.Age</p>
+        <p>Trainer Address: @Model.Address</p>
+        <p>Trainer Specialty: @Model.Specialty</p>
+    </div>
+</div>
+
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+    <div class="form-group">
+        @Html.ActionLink("Back to Trainer List", "IndexTrainer", "Admins", new { @class = "btn btn-primary" })
+    </div>
+</div>
+

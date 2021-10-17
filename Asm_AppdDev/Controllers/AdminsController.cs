@@ -259,5 +259,22 @@ namespace Asm_AppdDev.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexTrainer", "Admins");
         }
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public ActionResult TrainerInfoDetails(string id)
+        {
+            var trainerId = User.Identity.GetUserId();
+
+            var trainerInfoInDb = _context.Trainers
+                .SingleOrDefault(t => t.TrainerId == id);
+
+            if(trainerInfoInDb == null)
+            {
+                return HttpNotFound();
+            }
+            return View(trainerInfoInDb);
+        }
+
+        
     }
 }
