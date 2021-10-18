@@ -1,6 +1,7 @@
 ﻿using Asm_AppdDev.Models;
 using Asm_AppdDev.Utils;
 using Asm_AppdDev.ViewModels;
+using Asm_AppdDev.ViewModels.TraineesCourses;
 using Asm_AppdDev.ViewModels.TrainersCourses;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -111,6 +112,64 @@ namespace Asm_AppdDev.Controllers
             _context.SaveChanges();
             return RedirectToAction("GetTrainers", "AssignCourses");
         }
+        //Trainees
+        [HttpGet]
+        public ActionResult GetTrainees(string searchString)
+        {
+            var courses = _context.Courses.Include(t => t.Category).ToList();
+            var trainees = _context.TraineesToCourses.ToList();
 
+            List<TraineesInCoursesViewModels> viewModel = _context.TraineesToCourses
+                .GroupBy(i => i.Course)
+                .Select(res => new TraineesInCoursesViewModels
+                {
+                    Course = res.Key,
+                    Trainees = res.Select(u => u.Trainee).ToList(),
+                })
+                .ToList();
+
+            if(!string.IsNullOrEmpty(searchString))
+            {
+                viewModel = viewModel
+                   .Where(t => t.Course.Name
+                   .ToLower()
+                   .Contains(searchString.ToLower()))
+                   .ToList();
+            }
+
+            return View(viewModel);
+        }
+        [HttpGet]
+        public ActionResult AddTrainee()
+        {
+            var viewModel = new TraineesToCoursesViewModels
+            {
+                Courses = _context.Courses.ToList(),
+                Trainees = _context.Trainees.ToList(),
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult AddTrainee(TraineesToCoursesViewModels model)
+        {
+            //get view if model is invalid
+            var getViewModel = new TraineesToCourses
+            {
+                CourseId = model.CourseId,
+                TraineeId = model.TraineeId
+            };
+            List<TraineesToCourses> traineesCourses = _context.TraineesToCourses.ToList();
+            bool alreadyExist = traineesCourses.Any(item => item.CourseId == model.CourseId && item.TraineeId == model.TraineeId);
+            if (alreadyExist == true)
+            {
+                ModelState.AddModelError("", "Trainee is already assignned this Course");
+                return RedirectToAction("GetTrainees", "AssignCourses");
+            }
+            _context.TraineesToCourses.Add(getViewModel);
+            _context.SaveChanges();
+
+            return RedirectToAction("GetTrainees", "AssignCourses");    
+
+        }
     }
 }

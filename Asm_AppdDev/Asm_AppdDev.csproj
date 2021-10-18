@@ -229,6 +229,8 @@
     <Compile Include="ViewModels\CourseCategoriesViewModel.cs" />
     <Compile Include="ViewModels\StaffAccountViewModels.cs" />
     <Compile Include="ViewModels\TraineeAccountViewModels.cs" />
+    <Compile Include="ViewModels\TraineesCourses\TraineesInCoursesViewModels.cs" />
+    <Compile Include="ViewModels\TraineesCourses\TraineesToCoursesViewModels.cs" />
     <Compile Include="ViewModels\TrainerAccountViewModels.cs" />
     <Compile Include="ViewModels\TrainersCourses\TrainersInCoursesViewModels.cs" />
     <Compile Include="ViewModels\TrainersCourses\TrainersToCoursesViewModels.cs" />
@@ -312,6 +314,8 @@
     <Content Include="Views\AssignCourses\GetTrainers.cshtml" />
     <Content Include="Views\AssignCourses\AddTrainer.cshtml" />
     <Content Include="Views\AssignCourses\RemoveTrainer.cshtml" />
+    <Content Include="Views\AssignCourses\GetTrainees.cshtml" />
+    <Content Include="Views\AssignCourses\AddTrainee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
