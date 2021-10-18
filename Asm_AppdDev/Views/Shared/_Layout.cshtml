@@ -45,7 +45,8 @@
                         }
                         else if (User.IsInRole(Role.Trainee))
                         {
-                            <li>@Html.ActionLink("My Profile", "TraineeProfile", "Staffs")</li>
+                            <li>@Html.ActionLink("Trainees Profile", "Index", "Trainees")</li>
+                            <li>@Html.ActionLink("My Courses", "ViewCourses", "Trainees")</li>
                         }
 
                     }
