@@ -316,6 +316,7 @@
     <Content Include="Views\AssignCourses\RemoveTrainer.cshtml" />
     <Content Include="Views\AssignCourses\GetTrainees.cshtml" />
     <Content Include="Views\AssignCourses\AddTrainee.cshtml" />
+    <Content Include="Views\AssignCourses\RemoveTrainee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
