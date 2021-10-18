@@ -41,6 +41,7 @@
                         else if (User.IsInRole(Role.Trainer))
                         {
                             <li>@Html.ActionLink("Trainers Profile", "Index", "Trainers")</li>
+                            <li>@Html.ActionLink("My Courses", "ViewCourses", "Trainers")</li>
                         }
                         else if (User.IsInRole(Role.Trainee))
                         {

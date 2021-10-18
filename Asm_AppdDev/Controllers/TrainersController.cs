@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace Asm_AppdDev.Controllers
 {
@@ -54,5 +55,23 @@ namespace Asm_AppdDev.Controllers
             return RedirectToAction("Index", "Trainers");
         }
         [HttpGet]
+        public ActionResult ViewCourses()
+        {
+            var trainerId = User.Identity.GetUserId();
+            var trainer = _context.Trainers.ToList();
+            var course = _context.Courses
+                .Include(t => t.Category)
+                .ToList();
+            var courses = _context.TrainersToCourses
+                .Where(t => t.Trainer.TrainerId == trainerId)
+                .Select(t => t.Course)
+                .ToList();
+            return View(courses);
+        }
+        /*[HttpGet]
+        *//*public ActionResult CourseTrainees(int id)
+        {
+            var 
+        }*/
     }
 }
