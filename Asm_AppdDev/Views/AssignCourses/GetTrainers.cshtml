@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Asm_AppdDev.ViewModels.TrainersCourses.TrainersInCoursesViewModels>
+@{
+    ViewBag.Title = "Trainers In Courses";
+}
+
+<div class="page-header">
+    <h2 style="margin-bottom: 15px">Trainers In Courses</h2>
+</div>
+
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+    <div class="form-group">
+        @Html.ActionLink("Assign Trainer", "AddTrainer", "AssignCourses", new { @class = "btn btn-success" })
+        @Html.ActionLink("Remove Trainer", "RemoveTrainer", "AssignCourses", new { @class = "btn btn-danger" })
+    </div>
+
+    @using (Html.BeginForm("GetTrainers", "AssignCourses", FormMethod.Get))
+    {
+        <div class="form-inline">
+            @Html.TextBox("searchString", null, new { @class = "form-control" })
+            <button type="Submit" class="btn btn-primary">Search</button>
+        </div>
+    }
+</div>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Course Name</th>
+            <th scope="col">Trainers</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model)
+        {
+            <tr>
+                <td>@item.Course.Name</td>
+                <td>
+                    <ul>
+                        @foreach (var trainers in item.Trainers)
+                        {
+                            <li>@trainers.Name</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

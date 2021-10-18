@@ -162,27 +162,5 @@ namespace Asm_AppdDev.Controllers
             }
             return View(traineeInfoDb);
         }
-
-        [Authorize(Roles = "staff")]
-        public ActionResult TraineePasswordReset(string id)
-        {
-            var traineeInDb = _context.Users.SingleOrDefault(i => i.Id == id);
-            if (traineeInDb == null)
-            {
-                return HttpNotFound();
-            }
-            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            userId = traineeInDb.Id;
-            if (userId != null)
-            {
-                UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
-                userManager.RemovePassword(userId);
-                string newPassWord = "Password123@";
-                userManager.AddPassword(userId, newPassWord);
-            }
-            _context.SaveChanges();
-            return RedirectToAction("IndexTrainee", "Staffs");
-
-        }
     }
 }

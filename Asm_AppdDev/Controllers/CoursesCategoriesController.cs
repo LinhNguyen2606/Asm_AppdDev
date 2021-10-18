@@ -12,10 +12,10 @@ using System.Data.Entity;
 namespace Asm_AppdDev.Controllers
 {
 	[Authorize(Roles = Role.Staff)]
-	public class CoursesController : Controller
+	public class CoursesCategoriesController : Controller
 	{
 		private ApplicationDbContext _context;
-		public CoursesController()
+		public CoursesCategoriesController()
 		{
 			_context = new ApplicationDbContext();
 		}

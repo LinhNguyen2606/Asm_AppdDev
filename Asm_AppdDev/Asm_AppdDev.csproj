@@ -169,11 +169,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminsController.cs" />
+    <Compile Include="Controllers\AssignCoursesController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\CoursesCategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
+    <Compile Include="Controllers\TrainersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -205,6 +207,10 @@
     <Compile Include="Migrations\202110170852093_CreateTraineesTable.Designer.cs">
       <DependentUpon>202110170852093_CreateTraineesTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110181137552_CreateTrainersAndTraineesToCoursesTalbe.cs" />
+    <Compile Include="Migrations\202110181137552_CreateTrainersAndTraineesToCoursesTalbe.Designer.cs">
+      <DependentUpon>202110181137552_CreateTrainersAndTraineesToCoursesTalbe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -214,7 +220,9 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\Trainee.cs" />
+    <Compile Include="Models\TraineesToCourses.cs" />
     <Compile Include="Models\Trainer.cs" />
+    <Compile Include="Models\TrainersToCourses.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Role.cs" />
@@ -222,6 +230,8 @@
     <Compile Include="ViewModels\StaffAccountViewModels.cs" />
     <Compile Include="ViewModels\TraineeAccountViewModels.cs" />
     <Compile Include="ViewModels\TrainerAccountViewModels.cs" />
+    <Compile Include="ViewModels\TrainersCourses\TrainersInCoursesViewModels.cs" />
+    <Compile Include="ViewModels\TrainersCourses\TrainersToCoursesViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -296,6 +306,12 @@
     <Content Include="Views\Staffs\CreateTraineeAccount.cshtml" />
     <Content Include="Views\Staffs\EditTraineeAccount.cshtml" />
     <Content Include="Views\Staffs\TraineeInfoDetails.cshtml" />
+    <Content Include="Views\Admins\StaffInfoDetails.cshtml" />
+    <Content Include="Views\Trainers\Index.cshtml" />
+    <Content Include="Views\Trainers\EditTrainerAccount.cshtml" />
+    <Content Include="Views\AssignCourses\GetTrainers.cshtml" />
+    <Content Include="Views\AssignCourses\AddTrainer.cshtml" />
+    <Content Include="Views\AssignCourses\RemoveTrainer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110170852093_CreateTraineesTable.resx">
       <DependentUpon>202110170852093_CreateTraineesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110181137552_CreateTrainersAndTraineesToCoursesTalbe.resx">
+      <DependentUpon>202110181137552_CreateTrainersAndTraineesToCoursesTalbe.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

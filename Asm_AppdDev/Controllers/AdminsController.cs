@@ -143,6 +143,20 @@ namespace Asm_AppdDev.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexStaff", "Admins");
         }
+        [HttpGet]
+        public ActionResult StaffInfoDetails(string id)
+        {
+            var staffId = User.Identity.GetUserId();
+
+            var staffInfoInDb = _context.Staffs
+                .SingleOrDefault(t => t.StaffId == id);
+
+            if (staffInfoInDb == null)
+            {
+                return HttpNotFound();
+            }
+            return View(staffInfoInDb);
+        }
 
         [Authorize(Roles = "admin")]
         public ActionResult StaffPasswordReset(string id)
@@ -294,7 +308,6 @@ namespace Asm_AppdDev.Controllers
             }
             _context.SaveChanges();
             return RedirectToAction("IndexTrainer", "Admins");
-
         }
 
     }
