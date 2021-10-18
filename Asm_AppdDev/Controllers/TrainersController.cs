@@ -68,10 +68,14 @@ namespace Asm_AppdDev.Controllers
                 .ToList();
             return View(courses);
         }
-        /*[HttpGet]
-        *//*public ActionResult CourseTrainees(int id)
+        [HttpGet]
+        public ActionResult CourseTrainees(int id)
         {
-            var 
-        }*/
+            var traineesCourse = _context.TraineesToCourses
+                .Where(t => t.CourseId == id)
+                .Select(t => t.Trainee)
+                .ToList();
+            return View(traineesCourse);
+        }
     }
 }

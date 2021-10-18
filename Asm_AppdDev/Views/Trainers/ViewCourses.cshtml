@@ -6,8 +6,8 @@
 <h2>Your Courses</h2>
 
 
-<table class="table">
-    <thead class="thead-dark">
+<table class="table table-bordered">
+    <thead>
         <tr>
             <th scope="col">Course</th>
             <th scope="col">Description</th>
@@ -23,7 +23,7 @@
                 <td>@item.Description</td>
                 <td>@item.Category.Name</td>
                 <td>
-                    @Html.ActionLink("Trainees", "CourseTrainees", "Trainers", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("View Trainees", "CourseTrainees", "Trainers", new { id = item.Id }, new { @class = "btn btn-primary" })
                 </td>
             </tr>
         }
