@@ -53,5 +53,6 @@ namespace Asm_AppdDev.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index", "Trainers");
         }
+        [HttpGet]
     }
 }
