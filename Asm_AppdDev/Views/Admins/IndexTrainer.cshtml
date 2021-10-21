@@ -30,7 +30,7 @@
                 <td>
                     @Html.ActionLink("Edit Trainer Info", "EditTrainerAccount", "Admins", new { id = @item.Id }, new { @class = "btn btn-success" })
                     @Html.ActionLink("Delete Trainer", "DeleteTrainerAccount", "Admins", new { id = @item.TrainerId }, new { @class = "btn btn-danger" })
-                    @Html.ActionLink("Password Reset", "TrainerPasswordReset", "Admins", new { id = @item.TrainerId }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Password Change", "TrainerPasswordChange", "Admins", new { id = @item.TrainerId }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Trainer Details", "TrainerInfoDetails", "Admins", new { id = @item.TrainerId }, new { @class = "btn btn-info" })
                 </td>
             </tr>

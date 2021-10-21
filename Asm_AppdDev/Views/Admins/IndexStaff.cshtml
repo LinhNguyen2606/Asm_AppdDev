@@ -31,7 +31,7 @@
                     <td>
                         @Html.ActionLink("Edit Staff Info", "EditStaffAccount", "Admins", new { id = item.Id }, new { @class = "btn btn-success" })
                         @Html.ActionLink("Delete Staff", "DeleteStaffAccount", "Admins", new { id = @item.StaffId }, new { @class = "btn btn-danger" })
-                        @Html.ActionLink("Password Reset", "StaffPasswordReset", "Admins", new { id = @item.StaffId }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Password Change", "StaffPasswordChange", "Admins", new { id = @item.StaffId }, new { @class = "btn btn-primary" })
                         @Html.ActionLink("Staff Details", "StaffInfoDetails", "Admins", new { id = @item.StaffId }, new { @class = "btn btn-info" })
                     </td>
                 </tr>

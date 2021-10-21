@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using static Asm_AppdDev.Controllers.ManageController;
 
 namespace Asm_AppdDev.Controllers
 {
@@ -159,23 +160,32 @@ namespace Asm_AppdDev.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public ActionResult StaffPasswordReset(string id)
+        public ActionResult StaffPasswordChange()
         {
-            var staffInDb = _context.Users.SingleOrDefault(i => i.Id == id);
-            if (staffInDb  == null)
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StaffPasswordChange(ChangePasswordViewModel viewModel, string id)
+        {
+            var userInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            if (userInDb == null)
             {
                 return HttpNotFound();
             }
             var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            userId = staffInDb.Id;
+            userId = userInDb.Id;
+
             if (userId != null)
             {
                 UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
                 userManager.RemovePassword(userId);
-                string newPassword = "Password123@";
+                string newPassword = viewModel.NewPassword;
                 userManager.AddPassword(userId, newPassword);
             }
             _context.SaveChanges();
+            TempData["message"] = "Password changed successfully";
             return RedirectToAction("IndexStaff", "Admins");
         }
 
@@ -290,23 +300,33 @@ namespace Asm_AppdDev.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public ActionResult TrainerPasswordReset(string id)
+        [HttpGet]
+        public ActionResult TrainerPasswordChange()
         {
-            var trainerInDb = _context.Users.SingleOrDefault(i => i.Id == id);
-            if(trainerInDb == null)
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TrainerPasswordChange(ChangePasswordViewModels viewModel, string id)
+        {
+            var userInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            if (userInDb == null)
             {
                 return HttpNotFound();
             }
             var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            userId = trainerInDb.Id;
-            if(userId != null)
+            userId = userInDb.Id;
+
+            if (userId != null)
             {
                 UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
                 userManager.RemovePassword(userId);
-                string newPassWord = "Password123@";
-                userManager.AddPassword(userId, newPassWord);
+                string newPassword = viewModel.NewPassword;
+                userManager.AddPassword(userId, newPassword);
             }
             _context.SaveChanges();
+            TempData["message"] = "Trainer password has Successfully changed";
             return RedirectToAction("IndexTrainer", "Admins");
         }
 
